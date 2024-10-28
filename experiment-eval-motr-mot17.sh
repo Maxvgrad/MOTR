@@ -8,13 +8,13 @@
 
 # Resource allocation
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=1
 #SBATCH --mem=32G
 
 # Node configurations (commented out)
 ## falcone configurations
 #SBATCH --gres=gpu:tesla:1
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=4
 
 ## Pegasus configuration
 ##SBATCH --gres=gpu:a100-40g:4
