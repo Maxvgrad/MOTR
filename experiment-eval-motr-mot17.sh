@@ -100,8 +100,9 @@ else
     echo "Starting new training run."
 fi
 
-python3 eval.py \
+python3 main.py \
    --meta_arch motr \
+   --use_checkpoint \
    --dataset_file e2e_joint \
    --epoch 200 \
    --with_box_refine \
