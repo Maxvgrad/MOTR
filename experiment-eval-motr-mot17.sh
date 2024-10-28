@@ -64,7 +64,7 @@ MOT_ROOT_DIR=/gpfs/helios/home/ploter/projects/datasets
 # Set master node address
 master_addr=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 export MASTER_ADDR=$master_addr
-export MASTER_PORT=12381
+export MASTER_PORT=12382
 
 # Calculate world size for distributed training
 export WORLD_SIZE=$(($SLURM_NNODES * $SLURM_NTASKS_PER_NODE))
