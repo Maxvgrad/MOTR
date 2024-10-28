@@ -8,8 +8,8 @@ def mkdirs(d):
         os.makedirs(d)
 
 
-seq_root = '~/projects/datasets/MOT17/images/train'
-label_root = '~/projects/datasets/MOT17/labels_with_ids/train'
+seq_root = '/gpfs/helios/home/ploter/projects/datasets/MOT17/images/train'
+label_root = '/gpfs/helios/home/ploter/projects/datasets/MOT17/labels_with_ids/train'
 mkdirs(label_root)
 seqs = [s for s in os.listdir(seq_root)]
 
