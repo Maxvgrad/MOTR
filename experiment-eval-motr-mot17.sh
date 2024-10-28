@@ -56,7 +56,7 @@ output_dir="not_tracked_dir/output_${model_name}_${timestamp}"
 output_dir="models/crowdhuman_deformable_multi_frame_reproduce"
 
 EXP_DIR=exps/e2e_motr_r50_joint
-MOT_ROOT_DIR=/gpfs/helios/home/ploter/projects/datasets/MOT17
+MOT_ROOT_DIR=/gpfs/helios/home/ploter/projects/datasets
 
 #----------------------------------------
 # Distributed Training Setup
@@ -126,4 +126,5 @@ python3 main.py \
    --data_txt_path_train ./datasets/data_path/joint.train \
    --data_txt_path_val ./datasets/data_path/mot17.train \
    --resume ${EXP_DIR}/motr_final.pth \
-   --mot_path ${MOT_ROOT_DIR}
+   --mot_path ${MOT_ROOT_DIR} \
+   --eval
