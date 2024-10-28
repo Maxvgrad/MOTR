@@ -261,22 +261,22 @@ def evaluate_mot(model, criterion, postprocessors, data_loader, base_ds, device,
         data_dict = data_dict_to_cuda(data_dict, device)
 
         outputs = model(data_dict)
-        loss_dict = criterion(outputs, data_dict)
-        weight_dict = criterion.weight_dict
+        # loss_dict = criterion(outputs, data_dict)
+        # weight_dict = criterion.weight_dict
 
         # reduce losses over all GPUs for logging purposes
-        loss_dict_reduced = utils.reduce_dict(loss_dict)
-        loss_dict_reduced_scaled = {k: v * weight_dict[k]
-                                    for k, v in loss_dict_reduced.items() if k in weight_dict}
+        # loss_dict_reduced = utils.reduce_dict(loss_dict)
+        # loss_dict_reduced_scaled = {k: v * weight_dict[k]
+        #                             for k, v in loss_dict_reduced.items() if k in weight_dict}
         # loss_dict_reduced_unscaled = {f'{k}_unscaled': v
         #                               for k, v in loss_dict_reduced.items()}
         # metric_logger.update(loss=sum(loss_dict_reduced_scaled.values()),
         #                      **loss_dict_reduced_scaled,
         #                      **loss_dict_reduced_unscaled)
-        metric_logger.update(loss=sum(loss_dict_reduced_scaled.values()),
-                             **loss_dict_reduced_scaled,
-                             )
-        metric_logger.update(class_error=loss_dict_reduced['class_error'])
+        # metric_logger.update(loss=sum(loss_dict_reduced_scaled.values()),
+        #                      **loss_dict_reduced_scaled,
+        #                      )
+        # metric_logger.update(class_error=loss_dict_reduced['class_error'])
 
         targets = data['gt_instances']
 
