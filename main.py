@@ -27,7 +27,7 @@ from util.tool import load_model
 import util.misc as utils
 import datasets.samplers as samplers
 from datasets import build_dataset, get_coco_api_from_dataset
-from engine import evaluate, train_one_epoch, train_one_epoch_mot
+from engine import evaluate, evaluate_mot, train_one_epoch, train_one_epoch_mot
 from models import build_model
 
 
@@ -310,9 +310,13 @@ def main(args):
                 lr_scheduler.base_lrs = list(map(lambda group: group['initial_lr'], optimizer.param_groups))
             lr_scheduler.step(lr_scheduler.last_epoch)
             args.start_epoch = checkpoint['epoch'] + 1
-    
+
+    evaluate_func = evaluate
+    if args.dataset_file in ['e2e_mot', 'e2e_dance', 'mot', 'ori_mot', 'e2e_static_mot', 'e2e_joint']:
+        evaluate_func = evaluate_mot
+
     if args.eval:
-        test_stats, coco_evaluator = evaluate(model, criterion, postprocessors,
+        test_stats, coco_evaluator = evaluate_func(model, criterion, postprocessors,
                                               data_loader_val, base_ds, device, args.output_dir)
         if args.output_dir:
             utils.save_on_master(coco_evaluator.coco_eval["bbox"].eval, output_dir / "eval.pth")
@@ -322,8 +326,10 @@ def main(args):
     start_time = time.time()
 
     train_func = train_one_epoch
+    evaluate_func = evaluate
     if args.dataset_file in ['e2e_mot', 'e2e_dance', 'mot', 'ori_mot', 'e2e_static_mot', 'e2e_joint']:
         train_func = train_one_epoch_mot
+        evaluate_func = evaluate_mot
         dataset_train.set_epoch(args.start_epoch)
         dataset_val.set_epoch(args.start_epoch)
     for epoch in range(args.start_epoch, args.epochs):
@@ -347,7 +353,7 @@ def main(args):
                 }, checkpoint_path)
         
         if args.dataset_file not in ['e2e_mot', 'e2e_dance', 'mot', 'ori_mot', 'e2e_static_mot', 'e2e_joint']:
-            test_stats, coco_evaluator = evaluate(
+            test_stats, coco_evaluator = evaluate_func(
                 model, criterion, postprocessors, data_loader_val, base_ds, device, args.output_dir
             )
 
