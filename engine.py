@@ -278,7 +278,7 @@ def evaluate_mot(model, criterion, postprocessors, data_loader, base_ds, device,
         #                      )
         # metric_logger.update(class_error=loss_dict_reduced['class_error'])
 
-        targets = data['gt_instances']
+        targets = data_dict['gt_instances']
 
         orig_target_sizes = torch.stack([t["orig_size"] for t in targets], dim=0)
         results = postprocessors['bbox'](outputs, orig_target_sizes)
