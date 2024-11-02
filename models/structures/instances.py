@@ -132,6 +132,8 @@ class Instances:
             if hasattr(v, "to"):
                 v = v.to(*args, **kwargs)
             ret.set(k, v)
+        for k, v in self._fields_extra.items():
+            ret.set_field_extra(k, v)
         return ret
 
     def numpy(self):
@@ -140,6 +142,8 @@ class Instances:
             if hasattr(v, "numpy"):
                 v = v.numpy()
             ret.set(k, v)
+        for k, v in self._fields_extra.items():
+            ret.set_field_extra(k, v)
         return ret
 
     def __getitem__(self, item: Union[int, slice, torch.BoolTensor]) -> "Instances":
@@ -160,6 +164,8 @@ class Instances:
         ret = Instances(self._image_size)
         for k, v in self._fields.items():
             ret.set(k, v[item])
+        for k, v in self._fields_extra.items():
+            ret.set_field_extra(k, v)
         return ret
 
     def __len__(self) -> int:
