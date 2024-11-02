@@ -700,7 +700,7 @@ def build(args):
     losses = ['labels', 'boxes']
     criterion = ClipMatcher(num_classes, matcher=img_matcher, weight_dict=weight_dict, losses=losses)
     criterion.to(device)
-    postprocessors = {}
+    postprocessors = {'bbox': PostProcess()}
     model = MOTR(
         backbone,
         transformer,
