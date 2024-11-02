@@ -31,7 +31,7 @@ from .matcher import build_matcher
 from .deformable_transformer_plus import build_deforamble_transformer
 from .qim import build as build_query_interaction_layer
 from .memory_bank import build_memory_bank
-from .deformable_detr import SetCriterion, MLP
+from .deformable_detr import SetCriterion, MLP, PostProcess
 from .segmentation import sigmoid_focal_loss
 
 
