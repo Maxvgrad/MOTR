@@ -280,6 +280,9 @@ def evaluate_mot(model, criterion, postprocessors, data_loader, base_ds, device,
 
         targets = data_dict['gt_instances']
 
+        print(targets)
+        print(targets[0]._fields_extra)
+
         orig_target_sizes = torch.stack([t.get_field_extra('orig_size') for t in targets], dim=0)
         results = postprocessors['bbox'](outputs, orig_target_sizes)
         if 'segm' in postprocessors.keys():
