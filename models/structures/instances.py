@@ -201,6 +201,11 @@ class Instances:
             else:
                 raise ValueError("Unsupported type {} for concatenation".format(type(v0)))
             ret.set(k, values)
+        for k in instance_lists[0]._fields_extra.keys():
+            v0 = instance_lists[0]._fields_extra[k]
+            ret.set_field_extra(k, v0)
+            print(f'All values are same for key {k} is {all(v0 == i._fields_extra[k] for i in instance_lists)}')
+
         return ret
 
     def __str__(self) -> str:
@@ -208,7 +213,7 @@ class Instances:
         s += "num_instances={}, ".format(len(self))
         s += "image_height={}, ".format(self._image_size[0])
         s += "image_width={}, ".format(self._image_size[1])
-        s += "fields=[{}])".format(", ".join((f"{k}: {v}" for k, v in self._fields.items())))
+        s += "fields=[{}]".format(", ".join((f"{k}: {v}" for k, v in self._fields.items())))
         s += "fields_extra=[{}])".format(", ".join((f"{k}: {v}" for k, v in self._fields_extra.items())))
         return s
 
