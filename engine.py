@@ -260,6 +260,12 @@ def evaluate_mot(model, criterion, postprocessors, data_loader, base_ds, device,
     for data_dict in metric_logger.log_every(data_loader, 10, header):
         data_dict = data_dict_to_cuda(data_dict, device)
 
+        targets = data_dict['gt_instances']
+
+        print(targets)
+        print("extra:")
+        print(targets[0]._fields_extra)
+
         outputs = model(data_dict)
         # loss_dict = criterion(outputs, data_dict)
         # weight_dict = criterion.weight_dict
@@ -281,6 +287,7 @@ def evaluate_mot(model, criterion, postprocessors, data_loader, base_ds, device,
         targets = data_dict['gt_instances']
 
         print(targets)
+        print("extra:")
         print(targets[0]._fields_extra)
 
         orig_target_sizes = torch.stack([t.get_field_extra('orig_size') for t in targets], dim=0)
