@@ -48,6 +48,7 @@ class Instances:
         """
         self._image_size = image_size
         self._fields: Dict[str, Any] = {}
+        self._fields_extra: Dict[str, Any] = {}
         for k, v in kwargs.items():
             self.set(k, v)
 
@@ -83,6 +84,9 @@ class Instances:
             ), "Adding a field of length {} to a Instances of length {}".format(data_len, len(self))
         self._fields[name] = value
 
+    def set_field_extra(self, name: str, value: Any) -> None:
+        self._fields_extra[name] = value
+
     def has(self, name: str) -> bool:
         """
         Returns:
@@ -101,6 +105,12 @@ class Instances:
         Returns the field called `name`.
         """
         return self._fields[name]
+
+    def get_field_extra(self, name: str) -> Any:
+        """
+        Returns the field called `name`.
+        """
+        return self._fields_extra[name]
 
     def get_fields(self) -> Dict[str, Any]:
         """

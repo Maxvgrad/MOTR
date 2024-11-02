@@ -93,8 +93,8 @@ class DetMOTDetection:
         gt_instances.labels = targets['labels']
         gt_instances.obj_ids = targets['obj_ids']
         gt_instances.area = targets['area']
-        gt_instances.image_id = [targets['image_id'].item()]
-        gt_instances.orig_size = targets['orig_size'].tolist()
+        gt_instances.set_field_extra('image_id', targets['image_id'])
+        gt_instances.set_field_extra('orig_size', targets['orig_size'])
         return gt_instances
 
     def _pre_single_frame(self, idx: int):

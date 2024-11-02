@@ -280,12 +280,12 @@ def evaluate_mot(model, criterion, postprocessors, data_loader, base_ds, device,
 
         targets = data_dict['gt_instances']
 
-        orig_target_sizes = torch.stack([t["orig_size"] for t in targets], dim=0)
+        orig_target_sizes = torch.stack([t.get_field_extra('orig_size') for t in targets], dim=0)
         results = postprocessors['bbox'](outputs, orig_target_sizes)
         if 'segm' in postprocessors.keys():
             target_sizes = torch.stack([t["size"] for t in targets], dim=0)
             results = postprocessors['segm'](results, outputs, orig_target_sizes, target_sizes)
-        res = {target['image_id'].item() if isinstance(data, torch.Tensor) else target['image_id'][0]: output for target, output in zip(targets, results)}
+        res = {target.get_field_extra('image_id').item(): output for target, output in zip(targets, results)}
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
