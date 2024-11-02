@@ -209,6 +209,7 @@ class Instances:
         s += "image_height={}, ".format(self._image_size[0])
         s += "image_width={}, ".format(self._image_size[1])
         s += "fields=[{}])".format(", ".join((f"{k}: {v}" for k, v in self._fields.items())))
+        s += "fields_extra=[{}])".format(", ".join((f"{k}: {v}" for k, v in self._fields_extra.items())))
         return s
 
     __repr__ = __str__
